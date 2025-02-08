@@ -1,0 +1,52 @@
+# Caesar Cipher Implementation (Encryption and Decryption)
+
+def caesar_cipher_encrypt(text, shift):
+    
+    encrypted_text = ""
+    for char in text:
+        if char.isalpha():
+            # Determine whether the character is uppercase or lowercase
+            shift_base = ord('A') if char.isupper() else ord('a')
+            # Perform the shift and wrap around using modulo operation
+            encrypted_text += chr((ord(char) - shift_base + shift) % 26 + shift_base)
+        else:
+            # Keep non-alphabetical characters unchanged
+            encrypted_text += char
+    return encrypted_text
+
+def caesar_cipher_decrypt(text, shift):
+    
+    # Decryption is simply encryption with the negative shift
+    return caesar_cipher_encrypt(text, -shift)
+
+def main():
+    
+    print("Caesar Cipher Tool")
+    print("1. Encrypt")
+    print("2. Decrypt")
+
+    # Use try-except to handle invalid inputs
+    try:
+        choice = input("Choose an option (1 or 2): ").strip()
+
+        if choice not in ["1", "2"]:
+            print("Invalid choice. Please enter 1 to Encrypt or 2 to Decrypt.")
+            return
+
+        text = input("Enter the message: ").strip()
+        shift = int(input("Enter the shift value (integer): ").strip())
+
+        # Perform encryption or decryption based on the user's choice
+        if choice == "1":
+            result = caesar_cipher_encrypt(text, shift)
+            print("Encrypted message:", result)
+        elif choice == "2":
+            result = caesar_cipher_decrypt(text, shift)
+            print("Decrypted message:", result)
+
+    except ValueError:
+        print("Invalid input. Shift value must be an integer.")
+
+# Ensure the script runs only when executed directly
+if __name__ == "__main__":
+    main()
